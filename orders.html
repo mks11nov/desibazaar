@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Crazy Deals Mall</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </button>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="index.html" class="logo">Crazy<span>Deals</span></a>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="index.html#products" class="nav-link">Products</a>
+                
+            </div>
+
+            <div class="nav-icons">
+                <a href="cart.html" class="nav-icon-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span id="cartBadge" class="cart-badge">0</span>
+                </a>
+                
+                <div class="user-menu-container">
+                    <button id="userMenuBtn" class="nav-icon-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </button>
+                    <div id="userMenuDropdown" class="user-dropdown">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>My Orders</h1>
+                <p class="page-subtitle">Track and manage your orders</p>
+            </div>
+
+            <!-- Filter Options -->
+            <div class="orders-filters">
+                <button class="filter-btn active" data-status="all">All Orders</button>
+                <button class="filter-btn" data-status="pending">Pending</button>
+                <button class="filter-btn" data-status="processing">Processing</button>
+                <button class="filter-btn" data-status="shipped">Shipped</button>
+                <button class="filter-btn" data-status="delivered">Delivered</button>
+                <button class="filter-btn" data-status="cancelled">Cancelled</button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="ordersLoading" class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading your orders...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyOrders" class="empty-state" style="display: none;">
+                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+                <h2>No Orders Yet</h2>
+                <p>Start shopping to see your orders here</p>
+                <a href="index.html" class="btn btn-primary">Browse Products</a>
+            </div>
+
+            <!-- Orders List -->
+            <div id="ordersContent" class="orders-content" style="display: none;">
+                <div id="ordersList" class="orders-list">
+                    <!-- Orders populated by JavaScript -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="ordersPagination" class="pagination" style="display: none;">
+                    <button id="prevPage" class="btn btn-secondary">Previous</button>
+                    <span id="pageInfo" class="page-info">Page 1 of 1</span>
+                    <button id="nextPage" class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Crazy<span>Deals</span></a>
+                    <p class="footer-tagline">Your one-stop destination for unbeatable deals on premium products.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3 class="footer-title">Shop</h3>
+                        <ul class="footer-list">
+                            <li><a href="index.html#products">All Deals</a></li>
+                            <li><a href="index.html#products">Today's Specials</a></li>
+                            <li><a href="index.html#products">Trending</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3 class="footer-title">Account</h3>
+                        <ul class="footer-list">
+                            <li><a href="orders.html">My Orders</a></li>
+                            <li><a href="cart.html">Shopping Cart</a></li>
+                            <li><a href="checkout.html">Checkout</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h3 class="footer-title">Support</h3>
+                        <ul class="footer-list">
+                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="#shipping">Shipping Info</a></li>
+                            <li><a href="#returns">Returns</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Crazy Deals Mall. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Order Detail Modal -->
+    <div id="orderDetailModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <button class="modal-close" id="closeOrderModal">&times;</button>
+            </div>
+            <div id="orderDetailContent" class="modal-body">
+                <!-- Order details populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart-sync.js"></script>
+    <script src="js/orders.js"></script>
+</body>
+</html>

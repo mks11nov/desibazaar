@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEV8 - Setup Test</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+        }
+        .status-box {
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid;
+        }
+        .status-success {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        .status-error {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        .icon-success { color: #4caf50; font-size: 24px; }
+        .icon-error { color: #f44336; font-size: 24px; }
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 style="font-family: var(--font-display, serif); font-size: 3rem; margin-bottom: 20px;">
+            Setup Test
+        </h1>
+        
+        <div id="cssStatus" class="status-box">
+            <h2>Testing CSS...</h2>
+        </div>
+
+        <div class="test-item">
+            <h3>📁 File Structure Check</h3>
+            <p>Make sure you have these folders and files:</p>
+            <ul style="list-style: none; padding: 0;">
+                <li>✓ index.html</li>
+                <li>✓ product.html</li>
+                <li>✓ css/style.css</li>
+                <li>✓ js/app.js</li>
+                <li>✓ js/products.js</li>
+                <li>✓ data/products.json</li>
+            </ul>
+        </div>
+
+        <div class="test-item">
+            <h3>🌐 How to Run</h3>
+            <p><strong>Option 1: Python Server (Recommended)</strong></p>
+            <code>python -m http.server 8000</code>
+            <p style="margin-top: 10px;">Then visit: <code>http://localhost:8000</code></p>
+            
+            <p style="margin-top: 20px;"><strong>Option 2: Node.js</strong></p>
+            <code>npx http-server -p 8000</code>
+            
+            <p style="margin-top: 20px;"><strong>Option 3: VS Code Live Server</strong></p>
+            <p>Right-click index.html → "Open with Live Server"</p>
+        </div>
+
+        <div class="test-item">
+            <h3>🔍 Check Browser Console</h3>
+            <p>Press <code>F12</code> to open Developer Tools</p>
+            <p>Look for any red error messages</p>
+            <p>Common issue: "Failed to load resource: css/style.css"</p>
+            <p><strong>Solution:</strong> Use a local server (see above)</p>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="index.html" style="display: inline-block; padding: 15px 40px; background: #2A2A2A; color: white; text-decoration: none; border-radius: 50px; font-weight: 600;">
+                Go to Main Site →
+            </a>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background: #fff3cd; border-radius: 8px; border: 1px solid #ffc107;">
+            <strong>⚠️ Important:</strong> If the styling looks broken, read the <a href="SETUP-GUIDE.md" style="color: #2A2A2A; text-decoration: underline;">SETUP-GUIDE.md</a> file for detailed instructions.
+        </div>
+    </div>
+
+    <script>
+        // Test if CSS loaded
+        window.addEventListener('load', () => {
+            const statusBox = document.getElementById('cssStatus');
+            const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+            
+            // Check if CSS variables are working
+            const testElement = document.createElement('div');
+            testElement.style.cssText = 'color: var(--color-primary)';
+            document.body.appendChild(testElement);
+            const computedColor = window.getComputedStyle(testElement).color;
+            document.body.removeChild(testElement);
+            
+            if (computedColor !== 'rgb(0, 0, 0)' && computedColor !== '') {
+                statusBox.className = 'status-box status-success';
+                statusBox.innerHTML = `
+                    <div class="icon-success">✓</div>
+                    <h2>CSS Loaded Successfully!</h2>
+                    <p>Everything is working correctly.</p>
+                    <p>You can now use the main website.</p>
+                `;
+            } else {
+                statusBox.className = 'status-box status-error';
+                statusBox.innerHTML = `
+                    <div class="icon-error">✗</div>
+                    <h2>CSS Not Loading</h2>
+                    <p><strong>You need to use a local server!</strong></p>
+                    <p>Opening HTML files directly doesn't work due to browser security.</p>
+                    <p>See instructions below ⬇️</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

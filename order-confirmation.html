@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - ELEV8</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .confirmation-section { min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 3rem 1rem; }
+        .confirmation-box { max-width: 600px; text-align: center; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 16px; padding: 3rem 2rem; }
+        .success-icon { width: 80px; height: 80px; margin: 0 auto 2rem; background: rgba(74, 124, 89, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-success); font-size: 3rem; }
+        .confirmation-box h1 { font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 1rem; }
+        .order-number { font-size: 1.25rem; color: var(--color-secondary); font-weight: 700; margin: 1rem 0; }
+        .confirmation-box p { color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 2rem; }
+        .confirmation-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-secondary { padding: 1rem 2rem; border: 2px solid var(--color-border); border-radius: 50px; font-weight: 600; transition: all 0.3s; }
+        .btn-secondary:hover { border-color: var(--color-secondary); background: var(--color-secondary); color: var(--color-bg); }
+    </style>
+</head>
+<body>
+    <button id="themeToggle" class="theme-toggle"><svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/></svg><svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    <section class="confirmation-section">
+        <div class="confirmation-box">
+            <div class="success-icon">✓</div>
+            <h1>Order Confirmed!</h1>
+            <p class="order-number">Order #<span id="orderNumber">Loading...</span></p>
+            <p>Thank you for your order! You will receive a confirmation email shortly. Your order will be delivered within 5-7 business days.</p>
+            <p><strong>Payment Method:</strong> Cash on Delivery (COD)</p>
+            <div class="confirmation-actions">
+                <a href="index.html" class="btn-primary">Continue Shopping</a>
+                <a href="orders.html" class="btn-secondary">View Orders</a>
+            </div>
+        </div>
+    </section>
+    <script>
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        document.getElementById('orderNumber').textContent = orderId ? orderId.split('-').pop() : 'N/A';
+    </script>
+</body>
+</html>
