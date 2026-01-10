@@ -152,10 +152,41 @@ function displayProduct(product) {
         }
     });
     
-    // Set buy button action
+    // Set buy button action - Add to cart and go to checkout
     const buyButton = document.getElementById('buyNowBtn');
-    buyButton.addEventListener('click', () => {
-        window.open(product.externalBuyUrl, '_blank', 'noopener,noreferrer');
+    buyButton.addEventListener('click', async () => {
+        // Disable button and show loading
+        buyButton.disabled = true;
+        const originalHTML = buyButton.innerHTML;
+        buyButton.innerHTML = `
+            <div class="spinner"></div>
+            <span>Processing...</span>
+        `;
+
+        try {
+            // Add to cart (logged in or not)
+            if (Auth.isLoggedIn()) {
+                const response = await CartAPI.addItem(product.id, 1);
+                
+                if (response.success) {
+                    // Redirect to checkout
+                    window.location.href = 'checkout.html';
+                } else {
+                    Toast.error(response.message || 'Failed to add item');
+                    buyButton.disabled = false;
+                    buyButton.innerHTML = originalHTML;
+                }
+            } else {
+                // Add to local cart and redirect
+                Cart.addToLocalCart(product, 1);
+                window.location.href = 'checkout.html';
+            }
+        } catch (error) {
+            console.error('Buy now error:', error);
+            Toast.error('Failed to process. Please try again.');
+            buyButton.disabled = false;
+            buyButton.innerHTML = originalHTML;
+        }
     });
     
     // Animate elements
@@ -235,7 +266,7 @@ function createProductCard(product, index) {
             <p class="product-description">${product.description}</p>
             <div class="product-footer">
                 <div class="product-price">₹${product.price.toFixed(2)}</div>
-                <button class="btn-buy" onclick="handleBuyClick(event, '${product.externalBuyUrl}')" aria-label="Buy ${product.name}">
+                <button class="btn-buy" onclick="handleBuyClick(event, '${product.id}')" aria-label="Buy ${product.name}">
                     Buy Now
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="5" y1="12" x2="19" y2="12"/>
@@ -259,9 +290,10 @@ function createProductCard(product, index) {
 // ===================================
 // Handle Buy Button Click
 // ===================================
-function handleBuyClick(event, url) {
+function handleBuyClick(event, productId) {
     event.stopPropagation();
-    window.open(url, '_blank', 'noopener,noreferrer');
+    // Redirect to product detail page where user can use the Buy Now button
+    window.location.href = `product.html?id=${productId}`;
 }
 
 // ===================================

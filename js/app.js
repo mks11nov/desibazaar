@@ -137,6 +137,8 @@ async function loadProducts() {
 // ===================================
 function populateCategoryFilter() {
     const categoryFilter = document.getElementById('categoryFilter');
+    if (!categoryFilter) return;
+
     const categories = [...new Set(allProducts.map(p => p.category))];
     
     categories.forEach(category => {
@@ -152,6 +154,8 @@ function populateCategoryFilter() {
 // ===================================
 function displayProducts() {
     const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+
     const startIndex = 0;
     const endIndex = currentPage * PRODUCTS_PER_PAGE;
     
@@ -166,6 +170,8 @@ function displayProducts() {
     
     // Show/hide load more button
     const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (!loadMoreBtn) return;
+
     if (endIndex >= filteredProducts.length) {
         loadMoreBtn.classList.add('hidden');
     } else {
@@ -276,6 +282,8 @@ async function handleAddToCart(event, product) {
 // ===================================
 function initSearch() {
     const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+
     let searchTimeout;
     
     searchInput.addEventListener('input', (e) => {
@@ -292,6 +300,8 @@ function initSearch() {
 function initFilters() {
     const categoryFilter = document.getElementById('categoryFilter');
     const sortFilter = document.getElementById('sortFilter');
+
+    if (!categoryFilter || !sortFilter) return; // Early return if elements not found
     
     categoryFilter.addEventListener('change', filterProducts);
     sortFilter.addEventListener('change', filterProducts);
@@ -344,6 +354,8 @@ function filterProducts() {
 // ===================================
 function updateResultsCount() {
     const resultsCount = document.getElementById('resultsCount');
+    if (!resultsCount) return;
+
     const total = filteredProducts.length;
     const showing = Math.min(displayedProducts.length, total);
     
@@ -355,6 +367,8 @@ function updateResultsCount() {
 // ===================================
 function initLoadMore() {
     const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+    if (!loadMoreBtn) return; 
     
     loadMoreBtn.addEventListener('click', () => {
         currentPage++;
@@ -376,6 +390,8 @@ function initLoadMore() {
 // ===================================
 function showErrorMessage() {
     const grid = document.getElementById('productsGrid');
+    if (!grid) return;
+    
     grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
             <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-text);">
