@@ -229,7 +229,7 @@ function createProductCard(product, index) {
         if (!e.target.closest('.btn-add-cart')) {
             //window.location.href = `product.html?id=${product.id}`;
             // Use clean URL format: /product/slug
-            window.location.href = `/product/${product.slug}`;
+            window.location.href = `/product/?slug=${product.slug}`;
         }
     });
     
