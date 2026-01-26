@@ -54,14 +54,14 @@ function getProductSlugFromUrl() {
     //    return match[1];
     //}
 
+    // Check if old ID-based URL somehow exists (should be blocked by _redirects)
+    const urlParams = new URLSearchParams(window.location.search);
+
     const match = urlParams.get('slug');
     if (match) {
         return match
     }
     
-    
-    // Check if old ID-based URL somehow exists (should be blocked by _redirects)
-    const urlParams = new URLSearchParams(window.location.search);
     const oldId = urlParams.get('id');
     
     if (oldId) {
